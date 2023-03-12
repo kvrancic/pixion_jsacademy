@@ -1,0 +1,123 @@
+POCETAK: 
+npm init -> izbacit ce milijardu upitnika oko inicijalizacije i stvorio se package json 
+version: major.minor,patch  --- major: breaking promjena
+vazno -- scripts: kratke naredbe koje omogucuju pozivanje naseg servera na jednostavniji nacin (bez da pisemo svaki put npr. node file1.js --- stavimo u start: "node file1.js" i onda kad budemo npm-ali pozvat ce se sam)
+- sve naredbe iz script pokrecemo sa npm run ime_naredbe -- > start je defaultan pa moze i bez runa - npm start
+
+MODULI:
+fancy nacin za reci kako importat jedan file u drugi file i tako ih iskoristavat 
+require(default) vs import(needs "type": "modules" in json) -- u nodeu cemo koristiti require 
+- require sinkroni, import asinkroni 
+onaj file koji zelimo koristiti unosimo: 
+module.exports = () => {
+    console.log('ovdje stavi ono sto zelis da se napravi');
+}
+u fileu u kojemu ga iskoristavamo: 
+const File2 = require('./file2.js');
+pozivamo sa File2();
+
+sto ako zelimo exportati vise stvari? 
+const clog1 = () => {
+    console.log('ovo je file2');
+}
+const clog1 = () => {
+    console.log('ovo je file2, ali clog 2');
+}
+module.exports = {
+    clog1, 
+    clog2
+}; 
+pozivamo sa npr. File2.clog1(); 
+
+da koristimo import umjesto requirea onda samo kod funkcije napisemo export umjesto kasnije 
+u pozivajucoj funkciji: 
+import { clog2 } from './file2.js';
+clog2();
+- sada u package .json moramo staviti "type": "module" 
+
+dekonstrukcije: extractanje atributa iz objekta 
+const obj= {
+    a: 1, 
+    b: 2, 
+    c: 3
+}
+const {a, b, c} = obj; 
+---- sada dalje koristimo a, b i c umjesto obj.a, obj.b, obj.c 
+
+node_modules nikad ne commitamo -> uvijek se moze stvoriti iz package-locka
+
+EXPRESS:
+modul koji radi boilerplate za cijeli serverski kod 
+doslovno svaki node framework saserverskom funkcionalnoscu ima express kao pocetnu tocku 
+
+npm i express-generator -g
+express --no-view // view korisitmo za prikaz podataka (frontend) 
+
+malo pogledaj o routeru u expressu na internetu 
+
+uvijek kad pullamo neki kod uvijek pokreni npm install da se skinu node_modules
+pokrecemo kod sa npm start
+
+
+REST ZAHTJEVI
+GET - dohvacanje podataka - mozemo npr dati neki html sa .send(<div> neki html </div>) ili .json({atributi})
+u app.js 
+router.get('/', function(req, res, next){
+    res.send(<div> neki html </div>)
+    res.status(202).json({title: 'Express2'});
+    // ne mozemo sad opet napravit npr res.sendStatus(200); 
+
+})
+POST - pisanje podataka
+PUT - insertanje podataka
+DELETE - 
+
+STATUS KODOVI: 
+Informational responses (100 – 199)
+Successful responses (200 – 299)
+Redirection messages (300 – 399)
+Client error responses (400 – 499)
+Server error responses (500 – 599)
+
+PARAMETRI REST ZAHTJEVA: 
+QUERY parametri - https://some.url?vrijednost1=bok&vrijednost2=sok
+request funkcija - req, res, next
+    response - ono cime definiramo da mu saljemo nekakav response 
+        ako zelimo request saljemo mu res.json(req.query) //ispise se objekt s nasim queryjem ako smo getali 
+        ili npr u get extractamo => ocnst pozdrav = req.query.vrijednost1 + ' ' + req.query.vrijednost2; 
+        - query je dio rute pa nije dobar za privatnost 
+
+PATH parametri 
+router.get('/person/:id/details', function(req, res){
+    res.status(202).send(req.params); // translatirat ce se unutar rute bas onako kako je imenovan ovaj id npr. 
+})
+
+BODY parametri -> sigurni 
+- get nema body u sebi, ne mozemo koristiti u browseru - za to sluzi Postman 
+- skoro ekskluzivno kroz body saljemo je json 
+
+MONGO 
+- noSQL baza 
+- nema relacije 
+npm install mongoose 
+package.json provjeri jel postoji, u app.js upisi neku sablonu 
+[YOURNAME] - tu stavljam ime svoje baze
+rjesenje za callback hell: 
+unutar router.post 
+let nr; 
+try{
+    const nr = await newRobot.save();
+} catch(error) {
+    console.log(error)
+}
+res.json(nr); 
+}); 
+
+EVENT LOOP: javascriptova iluzija multithreadnessa 
+
+res.status samo u memoriji zapisuje status, res.sendStatus returna status
+
+
+
+
+

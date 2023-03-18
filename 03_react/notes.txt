@@ -1,0 +1,2 @@
+- svemu u public folderu mozemo pristupiti preko patha
+- kad ne otvaramo nista pretpostavlja se da otvaramo index.html -> zivi na rootu 

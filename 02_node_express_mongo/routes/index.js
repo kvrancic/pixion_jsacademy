@@ -50,19 +50,19 @@ router.post('/robot/new', async function(req, res, next) {
   res.json(nr); 
   }); 
 
-  // GET /robot/name - find all robots that have query (through query params) in any part of their name. Case insensitive.
-  router.get('/robot/name', async (req, res, next) => {
-    console.log(req.query); // for debugging purposes 
-    const query = req.query.name;
-    try {
-      /* const temp = await Robot.find({}); // u temp stavi sve robote kako bi mogao raditi pretragu 
-      const approvedRobots = temp.filter(robot => robot.name.toLowerCase().includes(query.toLowerCase())); */
-      const approvedRobots = await Robot.find({ name: { $regex: query, $options: 'i' } }); // this should be faster than extracting to temp
-      res.json(approvedRobots);
-    } catch (err) {
-      console.log(err);
-      return res.sendStatus(500);
-    }
-  });
+// GET /robot/name - find all robots that have query (through query params) in any part of their name. Case insensitive.
+router.get('/robot/name', async (req, res, next) => {
+  console.log(req.query); // for debugging purposes 
+  const query = req.query.name;
+  try {
+    /* const temp = await Robot.find({}); // u temp stavi sve robote kako bi mogao raditi pretragu 
+    const approvedRobots = temp.filter(robot => robot.name.toLowerCase().includes(query.toLowerCase())); */
+    const approvedRobots = await Robot.find({ name: { $regex: query, $options: 'i' } }); // this should be faster than extracting to the temp
+    res.json(approvedRobots);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+});
 
 module.exports = router;

@@ -35,3 +35,5 @@ readFile('./content/first.txt', 'utf8', (err, result) => {
 
 console.log('starting the next task');
 
+//ASINKRONO -- prije ce ispisati starting the next task, cim pocne dio readFile ce se samo offloadati i nastaviti dalje 
+

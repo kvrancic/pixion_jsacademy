@@ -1,2 +1,38 @@
 - svemu u public folderu mozemo pristupiti preko patha
-- kad ne otvaramo nista pretpostavlja se da otvaramo index.html -> zivi na rootu 
+- kad ne otvaramo nista pretpostavlja se da otvaramo index.html -> zivi na rootu (to je zato jer ima u bodyju root tag)
+- problem koji se javlja u cssu je sto funkcionira kao globalna varijabla i onda smo jako vezani za default postavke u vecim projektima 
+-> rjesenje: css moduli
+
+COMPONENT LIFECYCLE
+mountanje -> prvi put postavljamo 
+updateanje -> zelimo samo promijeniti ono sto se treba updateati 
+unmounting -> kada nam vise ne trebaju komponente, redimo cleanup process
+rendering? -> kada cemo rerenderati komponentu? 
+
+HOOKS - kako znati kad ce se sto napraviti od lifecycleanja 
+- poanta je da se spoji na svaki od komponenti 
+ zelimo da svaka komponenta oma stanje i da motemo mijenjati to dok je self containano tj da ostale komponente nisu svjesne toga
+
+USEEFFECT - omogucava da odreagiramo na promjenu stanja unutar komponente 
+Sto sve mozemo uhvatiti s UseEffect? 
+    1. trenutak mountanja komponente -> 
+        prvi parametar lambda koja radi callback, drugi lista stvari na koje se subscribeamo (ako je prazno desava se samo pri mountu)
+    2. trenutak unmountanja komponente -> 
+        moze je unmountati parent komponenta (App)
+    - pogledaj u counter,jsx kako mozemo koristiti objekte u useEffectu
+
+useMemo 
+- memoizacija kako ne bi vise puta morali nesto isto radit 
+- 14 * 52 prvi put moramo racunati u glavi neko vrijeme, ako me za 2 min netko pita koliko je vjerojatno cu se sjecat i odma znati 
+
+useCallback
+- isto kao useMemo samo sada memoiziramo citavu funkciju 
+
+PROPS 
+- kako iz app.jsx (pare)nt proslijediti nesto u counter.jsx (child) na nacin da funkcionira s reactom u smilsu rerendera itd. 
+
+FRAGMENTI 
+- pogledaj neki video o tome 
+
+DOMACI RAD: 
+- key igra ulogu jer po njemu React za koji element treba izbacit (ni slucajno index)

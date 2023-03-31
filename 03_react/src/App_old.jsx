@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Counter from './components/Counter';
-import CustomButton from './components/CustomButton';
 import styles from './App.module.css';
 
 function App() {
@@ -12,29 +11,25 @@ function App() {
     setCounters((prevCounters) => [...prevCounters, { id, count: 0 }]);
   };
 
-  const deleteCounter = (id, count) => {
+  const deleteCounter = (id) => {
     const index = counters.findIndex((counter) => counter.id === id);
     if (index !== -1) {
-      setTotal((prevTotal) => prevTotal - count);
       setCounters((counters) => [
         ...counters.slice(0, index),
         ...counters.slice(index + 1),
       ]);
     }
   };
-
+  
 
   const increaseTotal = () => {
     setTotal((prevTotal) => prevTotal + 1);
   };
 
-  const decreaseTotal = () => {
-    setTotal((prevTotal) => prevTotal - 1);
-  };
-
   return (
     <div className={styles.App}>
       <header className={styles.AppHeader}>
+        <button onClick={addCounter}>Add counter</button>
         {counters.map(({ id, count }) => (
           <Counter
             key={id}
@@ -43,10 +38,8 @@ function App() {
             increaseTotal={increaseTotal}
             deleteCounter={deleteCounter}
             total={total}
-            decreaseTotal={decreaseTotal}
           />
         ))}
-        <CustomButton onClick={addCounter}>Add counter</CustomButton>
       </header>
     </div>
   );

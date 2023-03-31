@@ -1,0 +1,41 @@
+import { memo, useEffect, useState, useMemo } from 'react';
+
+const Counter = ({ id, initialCount, increaseTotal, deleteCounter, total }) => {
+
+  const [count, setCount] = useState(initialCount);
+
+  useEffect(() => {
+    document.title = `Clicked ${count}`;
+  }, [count]);
+
+  useEffect(() => {
+    return () => {
+      console.log('Unmounted: ', id);
+    };
+  }, [id]);
+
+  const isLessThan10 = useMemo(() => {
+    console.log('recalculating 10');
+    return count < 10;
+  }, [count]);
+
+  return (
+    <div>
+      <div>
+        Counter: {count}/{total}
+      </div>
+      <div>Less than 10: {isLessThan10.toString()}</div>
+      <button
+        onClick={() => {
+          setCount(count + 1);
+          increaseTotal();
+        }}
+      >
+        Click me
+      </button>
+      <button onClick={() => deleteCounter(id)}>Delete me</button>
+    </div>
+  );
+};
+
+export default memo(Counter);
